@@ -5,6 +5,7 @@
     </slot>
     <div class="relationship-tabs-panel card">
       <div
+        :id="panel.name"
         class="tabs flex flex-row overflow-x-auto"
         :class="{'has-search-bar': activeTabHasSearch}"
       >
@@ -81,6 +82,15 @@ export default {
       return hasTab;
     }
   },
+  watch: {
+      '$route' (to, from) {
+          if(this.$route.query.tabs)
+          {
+              this.handleTabClick(this.tabs[Object.keys(this.tabs)[this.$route.query.tabIndex]]);
+              window.scrollTo(0,document.body.scrollHeight);
+          }
+      }
+  },
   mounted() {
     let tabs = {};
     this.panel.fields.forEach(field => {
@@ -95,7 +105,14 @@ export default {
       tabs[field.tab].fields.push(field);
     });
     this.tabs = tabs;
-    this.handleTabClick(tabs[Object.keys(tabs)[0]]);
+
+    if(this.$route.query.tabIndex && this.$route.query.tabs === this.panel.name)
+    {
+        this.handleTabClick(tabs[Object.keys(tabs)[this.$route.query.tabIndex]]);
+        window.scrollTo(0,document.body.scrollHeight);
+    } else {
+        this.handleTabClick(tabs[Object.keys(tabs)[0]]);
+    }
   },
   methods: {
     /**
