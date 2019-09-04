@@ -1,6 +1,8 @@
 <?php
 namespace Eminiarts\Tabs;
 
+use Laravel\Nova\Panel;
+use Illuminate\Support\Collection;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 trait TabsOnEdit
@@ -17,8 +19,9 @@ trait TabsOnEdit
             [
                 'Tabs' => [
                     'component' => 'tabs',
-                    'fields'    => $this->removeNonCreationFields($this->resolveFields($request)),
                     'bottom'    => isset(static::$tabsOnEditAtBottom) ? static::$tabsOnEditAtBottom : true,
+                    'fields'    => $this->removeNonCreationFields($request, $this->resolveFields($request)),
+                    'panel'     => Panel::defaultNameForCreate($request->newResource()),
                 ],
             ]
         );
@@ -107,10 +110,29 @@ trait TabsOnEdit
             [
                 'Tabs' => [
                     'component' => 'tabs',
-                    'fields'    => $this->removeNonUpdateFields($this->resolveFields($request)),
+                    'fields'    => $this->removeNonUpdateFields($request, $this->resolveFields($request)),
                     'bottom'    => isset(static::$tabsOnEditAtBottom) ? static::$tabsOnEditAtBottom : true,
+                    'panel'     => Panel::defaultNameForUpdate($request->newResource()),
                 ],
             ]
         );
+    }
+
+    /**
+     * Assign the fields with the given panels to their parent panel.
+     *
+     * @param  string                           $label
+     * @param  \Illuminate\Support\Collection   $panels
+     * @return \Illuminate\Support\Collection
+     */
+    protected function assignToPanels($label, Collection $panels)
+    {
+        return $panels->map(function ($field) use ($label) {
+            if ( !is_array($field) && !$field->panel ) {
+                 $field->panel = $label;
+            }
+
+            return $field;
+        });
     }
 }
