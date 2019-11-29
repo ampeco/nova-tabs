@@ -110,7 +110,7 @@ export default {
 
     if(this.$route.query.tabIndex && this.$route.query.tabs === this.panel.name) {
         this.handleTabClick(tabs[Object.keys(tabs)[this.$route.query.tabIndex]]);
-        window.scrollTo(0, document.body.scrollHeight);
+        document.getElementById(this.panel.name).scrollIntoView();
     } else if(!_.isUndefined(this.$route.query.tab)) {
         if(_.isUndefined(tabs[this.$route.query.tab])) {
             this.handleTabClick(tabs[Object.keys(tabs)[0]]);
