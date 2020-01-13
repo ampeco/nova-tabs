@@ -90,6 +90,7 @@ export default {
           {
               this.handleTabClick(this.tabs[Object.keys(this.tabs)[this.$route.query.tabIndex]]);
               window.scrollTo(0,document.body.scrollHeight);
+              this.$router.replace(this.$route.path)
           }
       }
   },
