@@ -1,3 +1,8 @@
+# Our fork adds
+* Ability to scroll to a tab based on query params -
+  [05b980dfac1996f5a92509298f9b09527bfb6abe](https://github.com/ampeco/nova-tabs/commit/05b980dfac1996f5a92509298f9b09527bfb6abe)
+  [6366acb4172cbc17dcbe6c1bd81d173b27224f77](https://github.com/ampeco/nova-tabs/commit/6366acb4172cbc17dcbe6c1bd81d173b27224f77)
+
 # Laravel Nova Tabs Package
 [![Latest Version on Github](https://img.shields.io/packagist/v/eminiarts/nova-tabs.svg?style=flat)](https://packagist.org/packages/eminiarts/nova-tabs)
 
